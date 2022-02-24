@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:replace="fragments/header-files :: head(title='Autores')">
+    </head>
+
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div class="container p-4 d-flex flex-column">
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <h1>Autores</h1>
+                    <span class="mb-5 text-muted">Utilice este módulo para administrar la base de datos de autores</span>
+                </div>
+                <a class="d-flex btn btn-info align-self-center" th:href="@{/autores/form}">Nuevo</a>
+            </div>
+            <hr>
+            <div class="justify-content-end mt-3">
+                <form th:action="@{/autores/search}" class="d-flex flex-row align-self-start">
+                    <input type="search" name="name" class="form-control mb-10" placeholder="Nombre del autor">
+
+                    <button type="submit" class=" btn ">Buscar</button>
+                    <a th:href="@{/autores}" class="btn ">Limpiar</a>
+                </form>
+            </div>
+            <div th:if="${#lists.isEmpty(authors)}">
+                <h3>No hay autores para mostrar</h3>
+            </div>
+            <table th:unless="${#lists.isEmpty(authors)}" class="table table-hover">
+                <thead>
+                <th scope="col">#Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col" class="text-center">Alta</th>
+                <th scope="col" class="text-center">Editar</th>
+                </thead>
+                <tbody>
+
+                    <tr th:each="author: ${authors}">
+                        <td th:text="${author.id}" />
+                        <td th:text="${author.name}" />
+                        <td class="text-center">
+
+                            <a th:if="${author.active}" th:href="@{/autores/baja/__${author.id}__}">
+                                <i class="fas fa-check text-success"></i>
+                            </a>
+                            <a th:unless="${author.active}" th:href="@{/autores/alta/__${author.id}__}"><i
+                                    class="fas fa-times text-danger"></i></a>
+                        </td>
+                        <td class="text-center">
+                            <a th:href="@{autores/form(id =__${author.id}__)}"><i class="far fa-edit text-warning"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Place this form under <h1>Autores</h1> to create a self contained form -->
+        <!--        <form id="form" class="d-flex" th:action="@{/autores/crear}" method="POST" th:object="${author}">-->
+        <!--            <input id="input-create" class="" style="display: none" th:field="*{name}"/>-->
+        <!--            <button class="btn btn-info align-self-center">Crear autor</button>-->
+        <!--        </form>-->
+
+
+        <!--<script>-->
+
+        <!--    const input = document.querySelector('#input-create');-->
+        <!--    const form = document.querySelector('#form');-->
+
+        <!--    form.addEventListener('submit', e => {-->
+        <!--        if (input.style.display === 'none' || input.value.trim() === '') {-->
+        <!--            e.preventDefault();-->
+        <!--        }-->
+        <!--        input.style.display = 'block';-->
+        <!--    });-->
+
+
+        <!--</script>-->
+
+    </body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:insert="fragments/header-files :: head(title='Editoriales')">
+        <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"-->
+        <!--integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />-->
+    </head>
+
+    <body>
+
+        <div th:replace="fragments/navbar :: navbar"></div>
+        <div class="container p-4 d-flex flex-column">
+            <div class="d-flex justify-content-between mb-3">
+                <div>
+                    <h1>Editoriales</h1>
+                    <span class="mb-5 text-muted">Utilice este módulo para administrar la base de datos de
+                        editoriales</span>
+                </div>
+                <a class="d-flex btn btn-info align-self-center" th:href="@{/editoriales/form}">Nuevo</a>
+            </div>
+            <hr>
+            <div class="justify-content-end mt-3">
+                <form th:action="@{/editoriales/search}" class="d-flex flex-row align-self-start">
+                    <input type="search" name="name" class="form-control mb-10" placeholder="Nombre de la editorial">
+                    <button type="submit" class=" btn ">Buscar</button>
+                    <a th:href="@{/editoriales}" class="btn ">Limpiar</a>
+                </form>
+            </div>
+            <div th:if="${#lists.isEmpty(publishers)}">
+                <h3>No hay editoriales para mostrar</h1>
+            </div>
+            <table th:unless="${#lists.isEmpty(publishers)}" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#Id</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col" class="text-center">Alta</th>
+                        <th scope="col" class="text-center">Editar</th>
+                    </tr>
+                </thead>
+                <tbody th:each="publisher: ${publishers}">
+                    <tr>
+                        <td th:text="${publisher.id}" />
+                        <td th:text="${publisher.name}" />
+                        <td class="text-center">
+                            <a th:if="${publisher.active}" th:href="@{/editoriales/baja/__${publisher.id}__}">
+                                <i class="fas fa-check text-success"></i></a>
+                            <a th:unless="${publisher.active}" th:href="@{/editoriales/alta/__${publisher.id}__}">
+                                <i class="fas fa-times text-danger"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a th:href="@{/editoriales/form(id =__${publisher.id}__)}"><i
+                                    class="far fa-edit text-warning"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Place this form under <h1>Editoriales</h1> to create a self contained form -->
+        <!--        <form id="form" class="d-flex" th:action="@{/editoriales/crear}" method="POST" th:object="${publisher}">-->
+        <!--            <input id="input-create" class="" style="display: none" th:field="*{name}"/>-->
+        <!--            <button class="btn btn-info align-self-center">Crear autor</button>-->
+        <!--        </form>-->
+
+
+        <!--<script>-->
+
+        <!--    const input = document.querySelector('#input-create');-->
+        <!--    const form = document.querySelector('#form');-->
+
+        <!--    form.addEventListener('submit', e => {-->
+        <!--        if (input.style.display === 'none' || input.value.trim() === '') {-->
+        <!--            e.preventDefault();-->
+        <!--        }-->
+        <!--        input.style.display = 'block';-->
+        <!--    });-->
+
+
+        <!--</script>-->
+
+    </body>
+
+</html>

@@ -1,0 +1,11 @@
+.rounded {
+    border-radius: 50%
+}
+
+.form-block {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    margin: 2em auto;
+}

@@ -1,0 +1,34 @@
+{
+    "elements": {},
+    "attributes": {
+        "th:classappend": {},
+        "th:if": {
+            "context": "div"
+        },
+        "th:text": {
+            "context": "td"
+        },
+        "th:unless": {
+            "context": "table"
+        },
+        "th:insert": {
+            "context": "head"
+        },
+        "th:action": {
+            "context": "form"
+        },
+        "xmnls:sec": {
+            "context": "html"
+        },
+        "th:replace": {
+            "context": "div"
+        },
+        "th:href": {
+            "context": "a"
+        },
+        "th:each": {
+            "context": "tbody"
+        },
+        "th:field": {}
+    }
+}

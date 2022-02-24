@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="fragments/header-files :: head(title='Guardar Editorial')"></div>
+
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="container-fluid m-4 d-flex flex-column">
+        <form th:action="@{/editoriales/form}" th:object="${publisher}" method="POST">
+
+            <h1
+                th:text="${publisher.id != null and !#strings.isEmpty(publisher.id) ? 'Editar Editorial' : 'Nueva Editorial'}">
+            </h1>
+            <div class="input-group mb-3 w-25">
+                <input class="form-control" type="text" th:field="*{name}" th:value="*{name}"
+                    placeholder="Escribí el nombre de la editorial" autofocus />
+                <input class="form-control" type="hidden" th:field="*{id}" th:value="${publisher.id}" />
+                <input class="form-control" type="hidden" th:field="*{active}" th:value="${publisher.active}" />
+                <button th:text="${publisher.id != null && !#strings.isEmpty(publisher.id) ? 'Guardar' : 'Crear'}"
+                    class="btn btn-sm btn-info" type="submit"></button>
+            </div>
+            <p class="text-danger" th:text="${errorMessage}"></p>
+        </form>
+    </div>
+</body>
+
+</html>

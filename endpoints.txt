@@ -1,0 +1,29 @@
+
+
+GET localhost:8080/ 
+
+GET localhost:8080/autores/ 
+GET localhost:8080/autores/form  
+POST localhost:8080/autores/form 
+GET localhost:8080/autores/alta/{id}
+GET localhost:8080/autores/baja/{id}  
+
+GET localhost:8080/editoriales
+GET localhost:8080/editoriales/form 
+POST localhost:8080/editoriales/form 
+
+GET localhost:8080/libros
+GET localhost:8080/libros/form 
+POST localhost:8080/libros/form 
+
+
+GET localhost:8080/clientes
+GET localhost:8080/clientes/form 
+POST localhost:8080/clientes/form 
+
+
+GET localhost:8080/prestamos
+GET localhost:8080/prestamos/form 
+POST localhost:8080/prestamos/form 
+
+

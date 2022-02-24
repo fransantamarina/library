@@ -1,0 +1,27 @@
+<html>
+
+<body>
+    <div th:fragment="navbar">
+        <!-- Navbar Start-->
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container-fluid d-flex justify-content-between">
+                <a class="navbar-brand" href="/">Biblioteca</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarID" aria-controls="navbarID" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarID">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" th:href="@{/editoriales}">Editoriales</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/autores}">Autores</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/libros}">Libros</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/clientes}">Clientes</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/prestamos}">Préstamos</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End-->
+    </div>
+</body>
+
+</html>

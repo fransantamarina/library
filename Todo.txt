@@ -1,0 +1,44 @@
+TO DO
+-- Create findByKeyword(any of the entity fields) query for everything
+-- Add cross to 'clean' search instead of clean button
+-- Create Customer profile view
+-- loan-list should redirect to customer profile when clicking on his/her name
+-- Protect loans route for admin and user
+-- In loan-list view, instead of 'New' button, render loan details if role equals USER
+-- Customer can only have one loan(in customer view with role USER, new loan must change view current loan)
+-- Implement delete button for everything (protect route -only for admin-)
+-- Send email when signin up
+-- Load book cover img (save URL)
+-- Load profile pic (user -save URL-)
+-- Sort tables
+-- change date format in loan view (only what's rendered)
+
+
+BUGS
+
+DONE
+-- Loan can't start after it ends(DONE)
+-- Add errorMessage to templates
+-- Check if when an entity instance is retrieved and modified it's necessary to save it again (NOT NECESSARY)
+-- Check if @PutMapping will work on regular controller when "activating" an entity instance(NEEDS REST CONTROLLER)
+-- Added empty list message to templates
+-- When creating new objects, check if they don't already exist
+-- Loan can't start before current day
+-- Loan must end automatically in endDate (turn active to false, show message in view)
+-- Remove New Loan button
+-- Separate getAll and getAllActive in every service class
+-- When editing a customer it creates a new one instead of editing the one on display(FIXED --> on template, added 
+    input type="hidden" and passed the existing customer's id back to the controller)
+-- When clicking on new Publisher it redirects to new Loan(FIXED -> fixed the route on NavBar)
+-- When clicking on new Customer and new Loan, there's a white label error(FIXED -> corrected url in view)
+-- When creating a new loan from customers view, it says "pick a customer and try again", check form and controller(FIXED -> passed back customerId from exception control)
+-- When a loan is made, books included must change their copies, loaned and available display
+- If customer already found in Loans, reject the loan
+
+ISSUES
+
+
+
+     
+    
+

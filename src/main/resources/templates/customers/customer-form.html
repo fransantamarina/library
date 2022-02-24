@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="fragments/header-files :: head(title='Guardar cliente')"></div>
+<link href="/styles.css" rel="stylesheet" />
+
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+
+    <form class="form-block" th:action="@{/clientes/form}" th:object="${customer}" method="POST">
+
+        <h1 th:text="${customer.id != null and !#strings.isEmpty(customer.id) ? 'Editar Cliente' : 'Nuevo Cliente'}">
+        </h1>
+        
+            <input type="hidden" th:field="${customer.id}">
+            <input type="text" th:field="${customer.name}" placeholder="Nombre">
+            <input type="text" th:field="${customer.lastName}" placeholder="Apellido">
+            <input type="text" th:field="${customer.phoneNumber}" placeholder="Número de teléfono">
+            <input type="text" th:field="${customer.idNumber}" placeholder="DNI">
+        
+        <button th:text="${customer.id != null && !#strings.isEmpty(customer.id) ? 'Guardar' : 'Crear'} "
+            class="btn btn-sm btn-info " type="submit "></button>
+        <p class="text-danger" th:text="${errorMessage}"></p>
+    </form>
+</body>
+
+</html>

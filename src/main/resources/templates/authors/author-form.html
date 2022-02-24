@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:insert="fragments/header-files :: head(title='Crear Autor')"></div>
+
+
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <div class="container-fluid m-4 d-flex flex-column">
+
+            <form th:action="@{/autores/form}" th:object="${author}" method="POST">
+                <h1 th:text="${author.id != null and !#strings.isEmpty(author.id) ? 'Editar Autor' : 'Nuevo Autor'}"></h1>
+
+                <input class="form-control" type="text" th:field="*{name}" th:value="${author.name}"
+                       placeholder="Escribí el nombre del autor" autofocus />
+                <input class="form-control" type="hidden" th:field="*{id}" th:value="${author.id}" />
+                <input class="form-control" type="hidden" th:field="*{active}" th:value="${author.active}" />
+                <button th:text="${author.id != null && !#strings.isEmpty(author.id) ? 'Guardar' : 'Crear'}"
+                        class="btn btn-sm btn-info" type="submit"></button>
+
+
+                <p class="text-danger" th:text="${errorMessage}"></p>
+            </form>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/header-files :: head(title='Libros')">
+</head>
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div class="container p-4 d-flex flex-column">
+        <div class="d-flex justify-content-between mb-1">
+            <div>
+                <h1>Libros</h1>
+                <span class="mb-5 text-muted">Utilice este módulo para administrar la base de datos de libros</span>
+            </div>
+            <a class="d-flex btn btn-info align-self-center" th:href="@{/libros/form}">Nuevo</a>
+        </div>
+        <hr>
+        <div class="justify-content-end mt-3">
+            <form th:action="@{/libros/search}" class="d-flex   flex-row align-self-start">
+                <input type="search" name="keyword" class="form-control mb-10" placeholder="Titulo / Autor / ISBN">
+
+                <button type="submit" class=" btn ">Buscar</button>
+                <a th:href="@{/libros}" class="btn ">Limpiar</a>
+            </form>
+        </div>
+        <div th:if="${#lists.isEmpty(books)}">
+            <h3>No hay libros para mostrar</h3>
+        </div>
+        <table th:unless="${#lists.isEmpty(books)}" class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ISBN</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Año</th>
+                    <th scope="col">Copias</th>
+                    <th scope="col">Prestados</th>
+                    <th scope="col">Disponibles</th>
+                    <th scope="col">Autor</th>
+                    <th scope="col">Editorial</th>
+                    <th scope="col" class="text-center">Alta</th>
+                    <th scope="col" class="text-center">Editar</th>
+                </tr>
+            </thead>
+            <tbody th:each="book: ${books}">
+                <tr>
+                    <td th:text="${book.isbn}" />
+                    <td th:text="${book.title}" />
+                    <td th:text="${book.year}" />
+                    <td th:text="${book.copies}" />
+                    <td th:text="${book.loaned}" />
+                    <td th:text="${book.copies == 0 ? '0' : book.copies - book.loaned}" />
+                    <td th:text="${book.author.name}" />
+                    <td th:text="${book.publisher.name}" />
+                    <td class="text-center">
+                        <a th:if="${book.active}" th:href="@{/libros/baja/__${book.id}__}"><i
+                                class="fas fa-check text-success"></i></a>
+                        <a th:unless="${book.active}" th:href="@{/libros/alta/__${book.id}__}"><i
+                                class="fas fa-times text-danger"></i></a>
+                    </td>
+                    <td class="text-center">
+                        <a th:href="@{/libros/form(bookId=__${book.id}__)}"><i class="far fa-edit text-warning"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Place this form under <h1>Libros</h1> to create a self contained form -->
+    <!--        <form id="form" class="d-flex" th:action="@{/libros/crear}" method="POST" th:object="${book}">-->
+    <!--            <input id="input-create" class="" style="display: none" th:field="*{name}"/>-->
+    <!--            <button class="btn btn-info align-self-center">Crear autor</button>-->
+    <!--        </form>-->
+
+
+    <!--<script>-->
+
+    <!--    const input = document.querySelector('#input-create');-->
+    <!--    const form = document.querySelector('#form');-->
+
+    <!--    form.addEventListener('submit', e => {-->
+    <!--        if (input.style.display === 'none' || input.value.trim() === '') {-->
+    <!--            e.preventDefault();-->
+    <!--        }-->
+    <!--        input.style.display = 'block';-->
+    <!--    });-->
+
+
+    <!--</script>-->
+
+</body>
+
+</html>

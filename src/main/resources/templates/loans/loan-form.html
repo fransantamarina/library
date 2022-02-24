@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="fragments/header-files :: head(title='Guardar préstamo')"></div>
+<link href="/styles.css" rel="stylesheet" />
+
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+
+    <form class="form-block" th:action="@{/prestamos/form}" th:object="${loan}" method="POST">
+
+        <input type="hidden" th:value="${loan.customer != null ? loan.customer.id : customerId}" name="customerId">
+        <input type="hidden" th:field="*{id}" th:value="${loan.id}">
+
+        <h1 th:text="${loan.id != null and !#strings.isEmpty(loan.id) ? 'Editar Préstamo' : 'Nuevo Préstamo'}"></h1>
+
+        <input type="date" th:field="*{startDate}" th:value="${#temporals.formatISO(loan.startDate)}">
+        <input type="date" th:field="*{endDate}" th:value="${#temporals.formatISO(loan.endDate)}">
+
+
+        <select name="books" th:field="*{books}" multiple>
+            <option th:each="book: ${books}" th:value="${{book}}"
+                th:text="${'Titulo: ' + book.title + ' / ' + 'ISBN: ' + book.isbn}"></option>
+        </select>
+
+        <button th:text="${loan.id != null && !#strings.isEmpty(loan.id) ? 'Guardar' : 'Crear'} "
+            class="btn btn-sm btn-info " type="submit "></button>
+        <p class="text-danger" th:text="${errorMessage}"></p>
+
+    </form>
+</body>
+
+</html>

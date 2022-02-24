@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="fragments/header-files :: head(title='Guardar Libro')"></div>
+<link href="/styles.css" rel="stylesheet" />
+
+
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+
+    <form class="form-block" method="POST" th:action="@{/libros/form} " th:object="${book}">
+        <h1 th:text="${book.id != null and !#strings.isEmpty(book.id) ? 'Editar Libro' : 'Nuevo Libro'}"></h1>
+        <input class="rounded" type="text" th:field="*{title}" th:value="*{title}" placeholder="Título" autofocus />
+        <input type="hidden" th:field="*{id}" th:value="${book.id}" />
+        <input type="hidden" th:field="*{active}" th:value="${book.active}" />
+        <input class="rounded" type="number" th:field="*{year}" th:value="${book.year}" placeholder="Año" />
+        <input class="rounded" type="text" th:field="*{isbn}" th:value="${book.isbn}" placeholder="ISBN" />
+        <input class="rounded" type="text" th:field="*{copies}" th:value="${book.copies}" placeholder="Copias" />
+        <input class="rounded" th:type="${book.loaned != null ? 'number' : 'hidden'}" th:field="*{loaned}"
+            th:value="${book.loaned}" placeholder="Prestados" />
+
+        <select class="rounded" name="authorId">
+            <option th:each="author : ${authors} " th:text="${author.name} " th:value="${author.id} "
+                th:selected="${book.author != null ? author.id == book.author.id : false} " />
+        </select>
+
+        <select class="rounded" name="publisherId">
+            <option th:each="publisher : ${publishers} " th:text="${publisher.name} " th:value="${publisher.id} "
+                th:selected="${book.publisher != null ? publisher.id == book.publisher.id : false} " />
+        </select>
+
+
+
+        <button th:text="${book.id != null && !#strings.isEmpty(book.id) ? 'Guardar' : 'Crear'}"
+            class="btn btn-sm btn-info" type="submit"></button>
+
+        <p class="text-danger" th:text="${errorMessage}"></p>
+    </form>
+</body>
+
+</html>
