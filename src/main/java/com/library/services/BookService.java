@@ -2,16 +2,21 @@ package com.library.services;
 
 import com.library.entities.Book;
 import com.library.repositories.BookRepository;
+import com.library.utils.FileUpload;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final String uploadDirectory = "book-photos/";
 
     @Autowired
     public BookService(BookRepository bookRepository) {
@@ -19,10 +24,19 @@ public class BookService {
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public void save(Book book) throws Exception {
+    public void save(Book book, Optional<MultipartFile> image) throws Exception {
         validate(book);
         activateIfNew(book);
-        bookRepository.save(book);
+        if (image.isPresent()) {
+            String fileName = StringUtils.cleanPath(image.get().getOriginalFilename());
+            book.setPhotos(fileName);
+            System.out.println("Book photos : " + book.getPhotos());
+            book = bookRepository.save(book);
+            String bookDirectory = uploadDirectory + book.getId();
+            FileUpload.saveFile(bookDirectory, fileName, image.get());
+        } else {
+            bookRepository.save(book);
+        }
     }
 
     @Transactional
