@@ -1,10 +1,6 @@
-<!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <div th:replace="fragments/header-files :: head(title='Guardar cliente')"></div>       
-
-
-
+    <div th:replace="fragments/header-files :: head(title='Registro Biblioteca')"></div>      
 
 
     <body>
@@ -17,12 +13,12 @@
             </h1>
 
             <input type="hidden" th:field="*{id}">
-            <input class="rounded" type="email" th:field="*{email}" placeholder="Email">
-            <input class="rounded" type="password" th:field="*{password}" placeholder="Contraseña">
-            <input class="rounded" type="text" th:field="*{name}" placeholder="Nombre">
-            <input class="rounded" type="text" th:field="*{lastName}" placeholder="Apellido">
-            <input class="rounded" type="text" th:field="*{phoneNumber}" placeholder="Número de teléfono">
-            <input class="rounded"  type="text" th:field="*{idNumber}" placeholder="DNI">
+            <input type="email" th:field="*{email}"  placeholder="Email" autocomplete="off">
+            <input type="password" th:field="*{password}" placeholder="Contraseña">
+            <input type="text" th:field="*{name}" placeholder="Nombre">
+            <input type="text" th:field="*{lastName}" placeholder="Apellido">
+            <input type="text" th:field="*{phoneNumber}" placeholder="Número de teléfono">
+            <input type="text" th:field="*{idNumber}" placeholder="DNI">
 
             <button th:text="${customer.id != null && !#strings.isEmpty(customer.id) ? 'Guardar' : 'Crear'} "
                     class="btn btn-sm btn-info " type="submit "></button>

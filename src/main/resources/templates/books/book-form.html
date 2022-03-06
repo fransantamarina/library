@@ -2,9 +2,6 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <div th:replace="fragments/header-files :: head(title='Guardar Libro')"></div>
-    <link href="/styles.css" rel="stylesheet" />
-
-
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
 
@@ -35,6 +32,8 @@
             <button th:text="${book.id != null && !#strings.isEmpty(book.id) ? 'Guardar' : 'Crear'}"
                     class="btn btn-sm btn-info" type="submit"></button>
 
+            <button th:text="${book.id != null && !#strings.isEmpty(book.id) ? 'Guardar' : 'Crear'}"
+                    class="btn btn-sm btn-info" type="submit"></button>
             <p class="text-danger" th:text="${errorMessage}"></p>
         </form>
     </body>

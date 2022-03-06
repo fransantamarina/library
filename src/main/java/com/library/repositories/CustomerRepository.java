@@ -21,4 +21,6 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
             + "OR c.idNumber LIKE %?1%")
     public List<Customer> find(String keyword);
 
+    public Customer findByEmail(String email);
+
 }

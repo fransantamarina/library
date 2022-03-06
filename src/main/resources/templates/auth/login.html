@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div th:replace="fragments/header-files :: head(title='Ingresa a la Biblioteca')">
+        <link href="/styles.css" rel="stylesheet" />
+    </div>
+    <body>
+        <div th:replace="fragments/navbar :: navbar"></div>
+
+        <form class="text-center form-block" th:action="@{/logincheck}" method="POST">
+
+            <h1> Bienvenido a la Biblioteca</h1>
+
+            <input class="rounded" type="email" name="email" placeholder="Email">
+
+            <input class="rounded" type="password" name="password" placeholder="Contraseña">
+
+            <button class="btn btn-sm btn-info" type="submit">Ingresar</button>
+            <p class="text-danger" th:if="${error}" th:text="${error}">Credenciales inválidas</p>
+        </form>
+    </body>
+</html>
+
+

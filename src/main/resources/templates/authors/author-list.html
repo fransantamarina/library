@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <head th:replace="fragments/header-files :: head(title='Autores')">
+    <head th:insert="fragments/header-files :: head(title='Autores')">
+        <link rel="stylesheet" href="../../static/styles.css" type="text/css"/>
+
     </head>
 
     <body>
@@ -12,20 +14,22 @@
                     <h1>Autores</h1>
                     <span class="mb-5 text-muted">Utilice este módulo para administrar la base de datos de autores</span>
                 </div>
-                <a class="d-flex btn btn-info align-self-center" th:href="@{/autores/form}">Nuevo</a>
+                <a sec:authorize="hasAnyRole('ADMIN')" class="d-flex btn btn-info align-self-center" th:href="@{/autores/form}">Nuevo</a>
             </div>
             <hr>
             <div class="justify-content-end mt-3">
                 <form th:action="@{/autores/search}" class="d-flex flex-row align-self-start">
                     <input type="search" name="name" class="form-control mb-10" placeholder="Nombre del autor">
 
-                    <button type="submit" class=" btn ">Buscar</button>
-                    <a th:href="@{/autores}" class="btn ">Limpiar</a>
+                    <button type="submit" class="btn btn-outline-info ml-1">Buscar</button>
+                    <a th:href="@{/autores}" class="btn btn-outline-dark ml-1">Limpiar</a>
                 </form>
             </div>
             <div th:if="${#lists.isEmpty(authors)}">
                 <h3>No hay autores para mostrar</h3>
             </div>
+
+
             <table th:unless="${#lists.isEmpty(authors)}" class="table table-hover">
                 <thead>
                 <th scope="col">#Id</th>
