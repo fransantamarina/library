@@ -16,7 +16,7 @@
                     <span class="mb-5 text-muted">Utilice este módulo para administrar la base de datos de
                         editoriales</span>
                 </div>
-                <a class="d-flex btn btn-info align-self-center" th:href="@{/editoriales/form}">Nuevo</a>
+                <a sec:authorize="hasAnyRole('ROLE_ADMIN')" class="d-flex btn btn-info align-self-center" th:href="@{/editoriales/form}">Nuevo</a>
             </div>
             <hr>
             <div class="justify-content-end mt-3">

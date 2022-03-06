@@ -3,8 +3,12 @@ package com.library.controllers;
 import com.library.entities.*;
 import com.library.services.*;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +16,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/libros")
+@PreAuthorize("isAuthenticated()")
 public class BookController {
 
     private final BookService bookService;
     private final AuthorService authorService;
     private final PublisherService publisherService;
+    private final CustomerService customerService;
 
     @Autowired
-    public BookController(BookService bookService, AuthorService authorService, PublisherService publisherService) {
+    public BookController(BookService bookService, AuthorService authorService, PublisherService publisherService, CustomerService customerService) {
         this.bookService = bookService;
         this.authorService = authorService;
         this.publisherService = publisherService;
+        this.customerService = customerService;
     }
 
     @GetMapping
@@ -37,7 +44,6 @@ public class BookController {
 
         model.addAttribute("authors", authorService.getAll());
         model.addAttribute("publishers", publisherService.getAll());
-
         if (bookId == null) {
             model.addAttribute("book", new Book());
             return "/books/book-form";

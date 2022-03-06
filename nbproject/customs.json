@@ -2,15 +2,10 @@
     "elements": {},
     "attributes": {
         "th:classappend": {},
-        "th:if": {
-            "context": "div"
-        },
         "th:text": {
             "context": "td"
         },
-        "th:unless": {
-            "context": "table"
-        },
+        "th:include": {},
         "th:insert": {
             "context": "head"
         },
@@ -20,15 +15,25 @@
         "xmnls:sec": {
             "context": "html"
         },
+        "th:each": {
+            "context": "tbody"
+        },
+        "th:field": {},
+        "th:fragment": {},
+        "th:if": {
+            "context": "div"
+        },
+        "th:unless": {
+            "context": "table"
+        },
+        "sec:authorize": {
+            "context": "div"
+        },
         "th:replace": {
             "context": "div"
         },
         "th:href": {
             "context": "a"
-        },
-        "th:each": {
-            "context": "tbody"
-        },
-        "th:field": {}
+        }
     }
 }

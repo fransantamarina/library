@@ -13,3 +13,9 @@ spring:
             dialect: org.hibernate.dialect.MySQL5InnoDBDialect      
     thymeleaf:
         cache: false 
+    security:
+        user:
+            name: "fran"
+            password: "1234"
+        
+        

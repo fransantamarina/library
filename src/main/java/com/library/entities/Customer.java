@@ -1,9 +1,12 @@
 package com.library.entities;
 
-import java.io.Serializable;
+import com.library.enums.Role;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,9 +27,19 @@ public class Customer {
     @EqualsAndHashCode.Include
     private String idNumber;
     private String name;
-    private String lastName;    
+    private String lastName;
     private String phoneNumber;
 
+    private String email;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private Boolean active;
+
+    public String getFullName() {
+        return this.name + " " + this.lastName;
+    }
 
 }

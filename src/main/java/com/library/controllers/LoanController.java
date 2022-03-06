@@ -3,12 +3,18 @@ package com.library.controllers;
 import com.library.entities.Book;
 import com.library.entities.Customer;
 import com.library.entities.Loan;
+import com.library.enums.Role;
 import com.library.services.BookService;
 import com.library.services.CustomerService;
 import com.library.services.LoanService;
+import java.util.Collections;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +38,14 @@ public class LoanController {
     @GetMapping
     public String listLoans(ModelMap model) {
 
-        model.addAttribute("loans", loanService.getAll());
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (authUser.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"))) {
+            model.addAttribute("loans", loanService.getAll());
+        } else {
+            model.addAttribute("loans", loanService.getAllByCustomer(authUser.getUsername()));
+        }
+
         return "/loans/loan-list";
     }
 

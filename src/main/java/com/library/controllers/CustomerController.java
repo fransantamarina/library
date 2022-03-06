@@ -5,6 +5,7 @@ import com.library.services.CustomerService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/clientes")
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class CustomerController {
 
     private final CustomerService customerService;

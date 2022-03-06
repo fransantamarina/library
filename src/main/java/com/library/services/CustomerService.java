@@ -1,14 +1,26 @@
 package com.library.services;
 
+import com.library.enums.Role;
 import com.library.entities.Customer;
 import com.library.repositories.CustomerRepository;
+import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
-public class CustomerService {
+public class CustomerService implements UserDetailsService {
 
     public final CustomerRepository customerRepository;
 
@@ -18,10 +30,11 @@ public class CustomerService {
     }
 
     @Transactional(rollbackOn = {Exception.class})
-    public void save(Customer customer) throws Exception {
+    public Customer save(Customer customer) throws Exception {
         validate(customer);
         activateIfNew(customer);
-        customerRepository.save(customer);
+        customer.setPassword(new BCryptPasswordEncoder().encode(customer.getPassword()));
+        return customerRepository.save(customer);
     }
 
     @Transactional
@@ -47,6 +60,11 @@ public class CustomerService {
     @Transactional
     public List<Customer> find(String keyword) {
         return customerRepository.find(keyword);
+    }
+
+    @Transactional
+    public Customer findByEmail(String email) {
+        return customerRepository.findByEmail(email);
     }
 
     @Transactional(rollbackOn = {Exception.class})
@@ -98,7 +116,30 @@ public class CustomerService {
     private void activateIfNew(Customer customer) {
         if (customer.getActive() == null) {
             customer.setActive(true);
+            customer.setRole(Role.USER);
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        Customer customer = customerRepository.findByEmail(email);
+
+        if (customer == null) {
+            //return null;
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
+
+        List<GrantedAuthority> permissions = new ArrayList<>();
+        GrantedAuthority rolePermissions = new SimpleGrantedAuthority("ROLE_" + customer.getRole().toString());
+        permissions.add(rolePermissions);
+
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+        HttpSession session = attr.getRequest().getSession(true);
+        session.setAttribute("customersession", customer);
+
+        return new User(customer.getEmail(), customer.getPassword(), permissions);
     }
 
 }

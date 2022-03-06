@@ -17,4 +17,7 @@ public interface LoanRepository extends JpaRepository<Loan, String> {
             + "OR l.startDate LIKE %?1%"
             + "OR l.endDate LIKE %?1%")
     public List<Loan> find(String keyword);
+
+    public List<Loan> findByCustomerEmail(String customerEmail);
+
 }
