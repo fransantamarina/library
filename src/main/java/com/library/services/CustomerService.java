@@ -137,6 +137,7 @@ public class CustomerService implements UserDetailsService {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 
         HttpSession session = attr.getRequest().getSession(true);
+
         session.setAttribute("customersession", customer);
 
         return new User(customer.getEmail(), customer.getPassword(), permissions);

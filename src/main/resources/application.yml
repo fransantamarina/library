@@ -15,7 +15,7 @@ spring:
         cache: false 
     security:
         user:
-            name: "fran"
+            name: "fran@mail.com"
             password: "1234"
-        
+  
         

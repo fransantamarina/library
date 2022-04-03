@@ -1,7 +1,9 @@
 package com.library.services;
 
 import com.library.entities.Author;
+import com.library.exceptions.WebException;
 import com.library.repositories.AuthorRepository;
+import java.io.FileReader;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +19,16 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    @Transactional(rollbackOn = {Exception.class})
-    public void save(Author author) throws Exception {
+    @Transactional(rollbackOn = {Exception.class, WebException.class})
+    public void save(Author author) throws WebException {
         validate(author);
         activateIfNew(author);
         authorRepository.save(author);
     }
 
-    @Transactional(rollbackOn = {Exception.class})
-    public Author findById(String id) throws Exception {
-        return authorRepository.findById(id).orElseThrow(() -> new Exception("No se encontro el autor"));
+    @Transactional(rollbackOn = {Exception.class, WebException.class})
+    public Author findById(String id) throws WebException {
+        return authorRepository.findById(id).orElseThrow(() -> new WebException("No se encontro el autor"));
     }
 
     @Transactional
@@ -56,20 +58,20 @@ public class AuthorService {
         author.setActive(false);
     }
 
-    private void validate(Author author) throws Exception {
+    private void validate(Author author) throws WebException {
 
         boolean authorExists = getAll().stream().anyMatch(existingAuthor -> existingAuthor.equals(author));
 
         if (authorExists && author.getId().isEmpty()) {
-            throw new Exception("Ya existe un autor con ese nombre");
+            throw new WebException("Ya existe un autor con ese nombre");
         }
 
         if (author.getName() == null || author.getName().trim().isEmpty()) {
-            throw new Exception("Debe indicar el nombre del autor");
+            throw new WebException("Debe indicar el nombre del autor");
         }
 
         if (author.getName().length() < 5) {
-            throw new Exception("El nombre debe tener por lo menos 5 caracteres");
+            throw new WebException("El nombre debe tener por lo menos 5 caracteres");
         }
     }
 

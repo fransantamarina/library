@@ -27,13 +27,12 @@
                         th:selected="${book.publisher != null ? publisher.id == book.publisher.id : false} " />
             </select>
 
-            <input class="rounded" type="file" name="image" accept="image/png, image/jpeg" />
+            <input class="rounded" type="file" name="image" accept="image/png, image/jpeg" value="Cargar Foto"/>
 
             <button th:text="${book.id != null && !#strings.isEmpty(book.id) ? 'Guardar' : 'Crear'}"
                     class="btn btn-sm btn-info" type="submit"></button>
 
-            <button th:text="${book.id != null && !#strings.isEmpty(book.id) ? 'Guardar' : 'Crear'}"
-                    class="btn btn-sm btn-info" type="submit"></button>
+
             <p class="text-danger" th:text="${errorMessage}"></p>
         </form>
     </body>

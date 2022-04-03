@@ -32,13 +32,13 @@ public class BookService {
 
         if (image.isPresent()) {
             String fileName = StringUtils.cleanPath(image.get().getOriginalFilename());
-            book.setPhotos(fileName);
-            System.out.println("Book photos : " + book.getPhotos());          
-            String bookDirectory = UPLOAD_DIRECTORY + book.getId();
+            book.setPhotos(book.getId() + "/" + fileName);
+            System.out.println("Book photos : " + book.getPhotos());
+            String bookDirectory = "book-photos/" + book.getId();
             FileUpload.saveFile(bookDirectory, fileName, image.get());
             bookRepository.flush();
         }
-       
+
     }
 
     @Transactional

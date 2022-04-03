@@ -7,11 +7,10 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -67,20 +66,19 @@ public class BookController {
             @RequestParam String publisherId,
             RedirectAttributes attr,
             ModelMap model,
-            @RequestParam("image") MultipartFile multipartFile) throws IOException {
+            @RequestParam("image") MultipartFile image) throws IOException {
         try {
             Author author = authorService.findById(authorId);
             Publisher publisher = publisherService.findById(publisherId);
             book.setAuthor(author);
             book.setPublisher(publisher);
-            System.out.println("Multipart: " + multipartFile.toString());
-            bookService.save(book, Optional.ofNullable(multipartFile));
+            bookService.save(book, Optional.ofNullable(image));
 
             return "redirect:/libros";
         } catch (Exception e) {
             System.out.println("ERROR :" + e.getMessage());
             model.addAttribute("errorMessage", e.getMessage());
-            model.addAttribute("book", book);
+//            model.addAttribute("book", book);
             model.addAttribute("authors", authorService.getAll());
             model.addAttribute("publishers", publisherService.getAll());
             return "/books/book-form";
