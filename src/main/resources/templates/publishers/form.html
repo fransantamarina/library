@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div th:replace="fragments/header-files :: head(title='Guardar Editorial')"></div>
+<div th:replace="common/header-files :: head(title='Guardar Editorial')"></div>
 
 
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
+    <div th:replace="common/navbar :: navbar"></div>
 
     <div class="container-fluid m-4 d-flex flex-column">
         <form th:action="@{/editoriales/form}" th:object="${publisher}" method="POST">

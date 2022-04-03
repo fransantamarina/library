@@ -1,0 +1,35 @@
+<div th:fragment="customerLoans(loans)">
+    <div th:if="${#lists.isEmpty(loans)}">
+        <h3>No hay préstamos para mostrar</h1>
+    </div>
+    <table th:unless="${#lists.isEmpty(loans)}" class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center">Fecha inicio</th>
+                <th scope="col" class="text-center">Fecha Fin</th>
+                <th scope="col" class="text-center">Libros</th>
+                <th scope="col" class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">Alta</th>
+                <th scope="col" class="text-center" sec:authorize="hasAnyRole('ROLE_ADMIN')">Editar</th>
+            </tr>
+        </thead>
+        <tbody th:each="loan: ${loans}">
+            <tr>
+                <td class="text-center" th:text="${loan.startDate}" />
+                <td class="text-center" th:text="${loan.endDate}" />
+                <td class="text-center">
+                    <a class="btn btn-info" th:href="@{/prestamos/form(customerId = __${loan.customer.id}__)}">Realizar
+                        préstamo</a>
+                </td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMIN')" class="text-center">
+                    <a th:if="${loan.active}" th:href="@{/prestamos/baja/__${loan.id}__}"><i
+                            class="fas fa-check text-success"></i></a>
+                    <a th:unless="${loan.active}" th:href="@{/prestamos/alta/__${loan.id}__}"><i
+                            class="fas fa-times text-danger"></i></a>
+                </td>
+                <td sec:authorize="hasAnyRole('ROLE_ADMIN')" class="text-center">
+                    <a th:href="@{prestamos/form(id =__${loan.id}__)}"><i class="far fa-edit text-warning"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

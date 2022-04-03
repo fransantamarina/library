@@ -3,14 +3,10 @@ package com.library.controllers;
 import com.library.entities.Book;
 import com.library.entities.Customer;
 import com.library.entities.Loan;
-import com.library.enums.Role;
 import com.library.services.BookService;
 import com.library.services.CustomerService;
 import com.library.services.LoanService;
-import java.util.Collections;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +42,7 @@ public class LoanController {
             model.addAttribute("loans", loanService.getAllByCustomer(authUser.getUsername()));
         }
 
-        return "/loans/loan-list";
+        return "/loans/list";
     }
 
     @GetMapping("/form")
@@ -58,7 +54,7 @@ public class LoanController {
 
         if (!model.containsKey("loan")) {
             model.addAttribute("loan", new Loan());
-            return "/loans/loan-form";
+            return "/loans/form";
         }
 
         Loan loan = (Loan) model.getAttribute("loan");
@@ -74,7 +70,7 @@ public class LoanController {
                 model.addAttribute("errorMessage", e.getMessage());
             }
         }
-        return "/loans/loan-form";
+        return "/loans/form";
     }
 
     @PostMapping("/form")
@@ -89,7 +85,7 @@ public class LoanController {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("loan", loan);
             model.addAttribute("books", bookService.getAll());
-            return "/loans/loan-form";
+            return "/loans/form";
         }
     }
 
@@ -118,7 +114,7 @@ public class LoanController {
     @GetMapping("/search")
     public String findBookByName(ModelMap model, @Param("keyword") String keyword) {
         model.addAttribute("loans", loanService.find(keyword));
-        return "/loans/loan-list";
+        return "/loans/list";
     }
 
 }

@@ -1,10 +1,10 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <div th:replace="fragments/header-files :: head(title='Registro Biblioteca')"></div>      
+    <div th:replace="common/header-files :: head(title='Registro Biblioteca')"></div>      
 
 
     <body>
-        <div th:replace="fragments/navbar :: navbar"></div>
+        <div th:replace="common/navbar :: navbar"></div>
 
 
         <form class="form-block" th:action="@{/clientes/form}" th:object="${customer}" method="POST">

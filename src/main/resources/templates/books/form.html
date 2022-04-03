@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
-    <div th:replace="fragments/header-files :: head(title='Guardar Libro')"></div>
+    <div th:replace="common/header-files :: head(title='Guardar Libro')"></div>
     <body>
-        <div th:replace="fragments/navbar :: navbar"></div>
+        <div th:replace="common/navbar :: navbar"></div>
 
 
         <form class="form-block" method="POST" th:action="@{/libros/form} " th:object="${book}" enctype="multipart/form-data">

@@ -25,19 +25,19 @@ public class PublisherController {
     public String listAuthors(ModelMap model) {
         List<Publisher> publishers = publisherService.getAll();
         model.addAttribute("publishers", publishers);
-        return "/publishers/publisher-list";
+        return "/publishers/list";
     }
 
     @GetMapping("/form")
     public String showForm(@RequestParam(required = false) String id, ModelMap model, RedirectAttributes attr) {
         if (id == null) {
             model.addAttribute("publisher", new Publisher());
-            return "/publishers/publisher-form";
+            return "/publishers/form";
         } else {
             try {
                 Publisher publisher = publisherService.findById(id);
                 model.addAttribute("publisher", publisher);
-                return "/publishers/publisher-form";
+                return "/publishers/form";
             } catch (Exception e) {
                 attr.addFlashAttribute("errorMessage", e.getMessage());
                 return "redirect:/editoriales";
@@ -52,7 +52,7 @@ public class PublisherController {
             return "redirect:/editoriales";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "/publishers/publisher-form";
+            return "/publishers/form";
         }
     }
 
@@ -79,9 +79,9 @@ public class PublisherController {
     }
 
     @GetMapping("/search")
-    public String findBookByName(ModelMap model, @Param("name") String name) {
+    public String findPublisherByName(ModelMap model, @Param("name") String name) {
         model.addAttribute("publishers", publisherService.findByName(name));
-        return "/publishers/publisher-list";
+        return "/publishers/list";
     }
 
 }

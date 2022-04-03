@@ -26,7 +26,8 @@
                         <div  class="justify-content-end collapse navbar-nav navbar-collapse bg-dark " id="navbarID">
                             <a sec:authorize="!isAuthenticated()" class="nav-link active" th:href="@{login}">Login</a>
                             <a sec:authorize="!isAuthenticated()"class="nav-link active" aria-current="page" th:href="@{registro}">Registro</a>
-                            <span sec:authorize="isAuthenticated()" class="nav-link active" th:if="${session.customersession != null}" th:text="${session.customersession.fullName}"></span>                            
+                            <a sec:authorize="isAuthenticated()" class="nav-link active" th:if="${session.customersession != null}" th:text="${session.customersession.fullName}"
+                            th:href="@{/clientes/perfil(customerId=__${session.customersession.id}__)}"></a>                            
                             <a sec:authorize="isAuthenticated()" class="nav-link active " aria-current="page" th:href="@{/logout}">Cerrar Sesión</a>
                         </div>
                     </div>

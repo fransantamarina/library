@@ -26,7 +26,7 @@ public class AuthorController {
     public String listAuthors(ModelMap model) {
         List<Author> authors = authorService.getAll();
         model.addAttribute("authors", authors);
-        return "authors/author-list";
+        return "authors/list";
     }
 
     @GetMapping("/form")
@@ -43,7 +43,7 @@ public class AuthorController {
                 return "redirect:/autores";
             }
         }
-        return "/authors/author-form";
+        return "/authors/form";
     }
 
     @PostMapping("/form")
@@ -54,7 +54,7 @@ public class AuthorController {
         } catch (WebException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("author", author);
-            return "/authors/author-form";
+            return "/authors/form";
         }
     }
 
@@ -83,7 +83,7 @@ public class AuthorController {
     @GetMapping("/search")
     public String findBookByName(ModelMap model, @Param("name") String name) {
         model.addAttribute("authors", authorService.findByName(name));
-        return "/authors/author-list";
+        return "/authors/list";
     }
 
 }

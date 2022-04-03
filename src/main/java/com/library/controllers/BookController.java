@@ -35,7 +35,7 @@ public class BookController {
     public String listBooks(ModelMap model) {
         List<Book> books = bookService.getAll();
         model.addAttribute("books", books);
-        return "/books/book-list";
+        return "/books/list";
     }
 
     @GetMapping("/form")
@@ -45,7 +45,7 @@ public class BookController {
         model.addAttribute("publishers", publisherService.getAll());
         if (bookId == null) {
             model.addAttribute("book", new Book());
-            return "/books/book-form";
+            return "/books/form";
         }
 
         if (!bookId.isEmpty()) {
@@ -57,7 +57,7 @@ public class BookController {
                 model.addAttribute("errorMessage", e.getMessage());
             }
         }
-        return "/books/book-form";
+        return "/books/form";
     }
 
     @PostMapping("/form")
@@ -81,7 +81,7 @@ public class BookController {
 //            model.addAttribute("book", book);
             model.addAttribute("authors", authorService.getAll());
             model.addAttribute("publishers", publisherService.getAll());
-            return "/books/book-form";
+            return "/books/form";
         }
     }
 
@@ -112,7 +112,7 @@ public class BookController {
     @GetMapping("/search")
     public String findBookByName(ModelMap model, @Param("keyword") String keyword) {
         model.addAttribute("books", bookService.find(keyword));
-        return "/books/book-list";
+        return "/books/list";
     }
 
 }

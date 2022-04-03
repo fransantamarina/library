@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<div th:replace="fragments/header-files :: head(title='Guardar préstamo')"></div>
+<div th:replace="common/header-files :: head(title='Guardar préstamo')"></div>
 <link href="/styles.css" rel="stylesheet" />
 
 
 <body>
-    <div th:replace="fragments/navbar :: navbar"></div>
+    <div th:replace="common/navbar :: navbar"></div>
 
 
     <form class="form-block" th:action="@{/prestamos/form}" th:object="${loan}" method="POST">

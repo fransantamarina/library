@@ -20,4 +20,6 @@ public interface LoanRepository extends JpaRepository<Loan, String> {
 
     public List<Loan> findByCustomerEmail(String customerEmail);
 
+    public List<Loan> findByCustomerId(String customerId);
+
 }
