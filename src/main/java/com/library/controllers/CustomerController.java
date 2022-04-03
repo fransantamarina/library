@@ -1,7 +1,9 @@
 package com.library.controllers;
 
 import com.library.entities.Customer;
+import com.library.entities.Loan;
 import com.library.services.CustomerService;
+import com.library.services.LoanService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -17,29 +19,31 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CustomerController {
 
     private final CustomerService customerService;
+    private final LoanService loanService;
 
     @Autowired
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, LoanService loanService) {
         this.customerService = customerService;
+        this.loanService = loanService;
     }
 
     @GetMapping
     public String listAuthors(ModelMap model) {
         List<Customer> customers = customerService.getAll();
         model.addAttribute("customers", customers);
-        return "/customers/customer-list";
+        return "/customers/list";
     }
 
     @GetMapping("/form")
     public String showForm(@RequestParam(required = false) String id, ModelMap model, RedirectAttributes attr) {
         if (id == null) {
             model.addAttribute("customer", new Customer());
-            return "/customers/customer-form";
+            return "/customers/form";
         } else {
             try {
                 Customer customer = customerService.findById(id);
                 model.addAttribute("customer", customer);
-                return "/customers/customer-form";
+                return "/customers/form";
             } catch (Exception e) {
                 attr.addFlashAttribute("errorMessage", e.getMessage());
                 return "redirect:/clientes";
@@ -54,7 +58,7 @@ public class CustomerController {
             return "redirect:/clientes";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "/customers/customer-form";
+            return "/customers/form";
         }
     }
 
@@ -81,9 +85,26 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    public String findBookByName(ModelMap model, @Param("keyword") String keyword) {
+    public String findCustomerByKeyword(ModelMap model, @Param("keyword") String keyword) {
         model.addAttribute("customers", customerService.find(keyword));
-        return "/customers/customer-list";
+        return "/customers/list";
+    }
+
+    @GetMapping("/perfil")
+    public String showProfile(@RequestParam("customerId") String customerId, ModelMap model) {
+        try {
+            Customer customer = customerService.findById(customerId);
+            model.addAttribute("customer", customer);
+
+            //get this customers loans
+            List<Loan> loans = loanService.getAllByCustomerId(customer.getId());
+            model.addAttribute("loans", loans);
+
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+
+        return "customers/profile";
     }
 
 }
