@@ -1,9 +1,12 @@
 package com.library.entities;
 
+import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(generator = "uuid")
@@ -35,8 +38,17 @@ public class Book {
     @ManyToOne
     private Publisher publisher;
 
+    @Column(nullable = true, length = 64)
+    private String photos;
+
     public boolean isAvailable() {
         return (this.copies - this.loaned) > 0;
     }
 
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) {
+            return null;
+        }
+        return "/user-photos/" + id + "/" + photos;
+    }
 }

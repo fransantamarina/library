@@ -22,7 +22,7 @@ public class Author {
     private String id;
 
     private String name;
+
     @EqualsAndHashCode.Exclude
     private Boolean active;
-
 }

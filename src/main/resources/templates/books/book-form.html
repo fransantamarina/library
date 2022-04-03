@@ -2,13 +2,11 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmnls:sec="http://www.thymeleaf.org/extras/spring-security">
 
     <div th:replace="fragments/header-files :: head(title='Guardar Libro')"></div>
-
-
     <body>
         <div th:replace="fragments/navbar :: navbar"></div>
 
 
-        <form class="form-block" method="POST" th:action="@{/libros/form} " th:object="${book}">
+        <form class="form-block" method="POST" th:action="@{/libros/form} " th:object="${book}" enctype="multipart/form-data">
             <h1 th:text="${book.id != null and !#strings.isEmpty(book.id) ? 'Editar Libro' : 'Nuevo Libro'}"></h1>
             <input class="rounded" type="text" th:field="*{title}" th:value="*{title}" placeholder="Título" autofocus />
             <input type="hidden" th:field="*{id}" th:value="${book.id}" />
@@ -29,10 +27,11 @@
                         th:selected="${book.publisher != null ? publisher.id == book.publisher.id : false} " />
             </select>
 
-
+            <input class="rounded" type="file" name="image" accept="image/png, image/jpeg" value="Cargar Foto"/>
 
             <button th:text="${book.id != null && !#strings.isEmpty(book.id) ? 'Guardar' : 'Crear'}"
                     class="btn btn-sm btn-info" type="submit"></button>
+
 
             <p class="text-danger" th:text="${errorMessage}"></p>
         </form>

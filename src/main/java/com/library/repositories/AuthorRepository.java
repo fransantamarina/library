@@ -11,5 +11,4 @@ public interface AuthorRepository extends JpaRepository<Author, String> {
     public List<Author> findByNameContaining(String name);
 
     public List<Author> findByActiveTrue();
-
 }

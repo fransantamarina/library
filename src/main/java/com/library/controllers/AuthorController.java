@@ -1,6 +1,7 @@
 package com.library.controllers;
 
 import com.library.entities.Author;
+import com.library.exceptions.WebException;
 import com.library.services.AuthorService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class AuthorController {
             try {
                 Author author = authorService.findById(id);
                 model.addAttribute("author", author);
-            } catch (Exception e) {
+            } catch (WebException e) {
                 attr.addFlashAttribute("errorMessage", e.getMessage());
                 return "redirect:/autores";
             }
@@ -50,7 +51,7 @@ public class AuthorController {
         try {
             authorService.save(author);
             return "redirect:/autores";
-        } catch (Exception e) {
+        } catch (WebException e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("author", author);
             return "/authors/author-form";

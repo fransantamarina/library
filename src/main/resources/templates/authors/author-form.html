@@ -12,7 +12,7 @@
         <div class="container-fluid m-4 d-flex flex-column">
 
             <form class="form-block" th:action="@{/autores/form}" th:object="${author}" method="POST">
-                <h1 th:text="${author.id != null and !#strings.isEmpty(author.id) ? 'Editar Autor' : 'Nuevo Autor'}"></h1>
+                <h1 th:text="${author.id != null AND !#strings.isEmpty(author.id) ? 'Editar Autor' : 'Nuevo Autor'}"></h1>
                 <div class="input-group mb-3 w-25">
                     <input class="form-control" type="text" th:field="*{name}" th:value="${author.name}"
                            placeholder="Escribí el nombre del autor" autofocus />
